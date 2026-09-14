@@ -1,0 +1,6 @@
+{
+  "name": "JEV Asesoría Financiera",
+  "description": "Firma boutique de ingeniería financiera, planeación tributaria estratégica, finanzas corporativas y gestión patrimonial en Colombia y LATAM.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
