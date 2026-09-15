@@ -506,9 +506,9 @@ export const ContactoScreen: React.FC<ContactoScreenProps> = ({
                     className="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-[#2563eb] to-[#00a572] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-[#2563eb]/20 hover:opacity-95 transition-all disabled:opacity-50 mt-2 cursor-pointer"
                   >
                     <span>
-                      {formData.meetingMode.includes('Virtual') && googleUser
-                        ? 'Confirmar y Agendar con Google Calendar'
-                        : 'Confirmar Solicitud de Sesión Estratégica'}
+                      {formData.meetingMode.includes('Virtual')
+  ? 'Confirmar y Agendar Sesión'
+  : 'Confirmar Solicitud de Sesión Estratégica'}
                     </span>
                     <Send className="w-4 h-4" />
                   </button>
