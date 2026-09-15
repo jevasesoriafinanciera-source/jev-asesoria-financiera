@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { ScreenId } from '../types';
-import { User } from 'firebase/auth';
+import {
+  createCalendarEvent,
+  buildGoogleCalendarWebLink,
+  CreatedCalendarEvent,
+} from '../services/googleCalendar';
 import {
   Calendar,
   MapPin,
@@ -18,9 +22,6 @@ import {
 import { CalendarScheduler } from '../components/CalendarScheduler';
 import { CalendarConfirmModal } from '../components/CalendarConfirmModal';
 import {
-  initAuth,
-  googleSignIn,
-  logoutGoogle,
   createCalendarEvent,
   buildGoogleCalendarWebLink,
   CreatedCalendarEvent,
@@ -63,8 +64,7 @@ export const ContactoScreen: React.FC<ContactoScreenProps> = ({
     acceptedTerms: true,
   });
 
-  const [googleUser, setGoogleUser] = useState<User | null>(null);
-  const [isConnectingGoogle, setIsConnectingGoogle] = useState(false);
+ 
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [isSchedulingCalendar, setIsSchedulingCalendar] = useState(false);
   const [calendarError, setCalendarError] = useState<string | null>(null);
@@ -74,71 +74,81 @@ export const ContactoScreen: React.FC<ContactoScreenProps> = ({
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
   // Auth state listener
-  useEffect(() => {
-    const unsubscribe = initAuth(
-      (user) => {
-        setGoogleUser(user);
-        if (user.email) {
-          setFormData((prev) => ({
-            ...prev,
-            email: prev.email || user.email || '',
-            fullName: prev.fullName || user.displayName || '',
-          }));
-        }
-      },
-      () => setGoogleUser(null)
-    );
-    return () => unsubscribe();
-  }, []);
-
-  const handleConnectGoogle = async () => {
-    setIsConnectingGoogle(true);
-    setCalendarError(null);
-    try {
-      const result = await googleSignIn();
-      if (result?.user) {
-        setGoogleUser(result.user);
-        setFormData((prev) => ({
-          ...prev,
-          email: prev.email || result.user.email || '',
-          fullName: prev.fullName || result.user.displayName || '',
-        }));
-      }
-    } catch (err: any) {
-      console.error('Error al conectar Google:', err);
-      if (err?.code !== 'auth/popup-closed-by-user') {
-        setCalendarError(
-          'No se pudo conectar con Google Calendar. Puede programar la sesión y enviarla normalmente.'
-        );
-      }
-    } finally {
-      setIsConnectingGoogle(false);
-    }
-  };
-
-  const handleDisconnectGoogle = async () => {
-    await logoutGoogle();
-    setGoogleUser(null);
-  };
+  
 
   const executeCalendarBooking = async () => {
-    setIsSchedulingCalendar(true);
-    setCalendarError(null);
+  setIsSchedulingCalendar(true);
+  setCalendarError(null);
 
-    try {
-      const [startHourStr, startMinStr] = formData.preferredTime.split(' - ')[0].split(':');
-      const [endHourStr, endMinStr] = formData.preferredTime.split(' - ')[1].split(':');
-      const startIso = `${formData.preferredDate}T${startHourStr.padStart(2, '0')}:${startMinStr.padStart(2, '0')}:00-05:00`;
-      const endIso = `${formData.preferredDate}T${endHourStr.padStart(2, '0')}:${endMinStr.padStart(2, '0')}:00-05:00`;
+  try {
+    const [startHourStr, startMinStr] =
+      formData.preferredTime.split(' - ')[0].split(':');
 
-      const event = await createCalendarEvent({
-        summary: `Sesión Directiva JEV Asesoría Financiera - ${formData.area}`,
-        description: `Sesión de asesoría financiera confidencial con JEV Asesoría Financiera S.A.S.\n\n• Cliente: ${formData.fullName}\n• Empresa/Organización: ${formData.company || 'N/A'}\n• Correo: ${formData.email}\n• WhatsApp: ${formData.phone}\n• Modalidad: Virtual (Google Meet)\n• Especialidad: ${formData.area}\n\nContexto inicial:\n${formData.notes || 'Revisión técnica de indicadores y planeación estratégica.'}`,
-        startTime: startIso,
-        endTime: endIso,
-        attendeeEmail: formData.email,
-        attendeeName: formData.fullName,
-      });
+    const [endHourStr, endMinStr] =
+      formData.preferredTime.split(' - ')[1].split(':');
+
+    const startIso =
+      `${formData.preferredDate}T${startHourStr.padStart(2, '0')}:${startMinStr.padStart(2, '0')}:00-05:00`;
+
+    const endIso =
+      `${formData.preferredDate}T${endHourStr.padStart(2, '0')}:${endMinStr.padStart(2, '0')}:00-05:00`;
+
+    const event = await createCalendarEvent({
+      summary:
+        `Sesión Directiva JEV Asesoría Financiera - ${formData.area}`,
+
+      description:
+        `Sesión de asesoría financiera confidencial con JEV Asesoría Financiera S.A.S.\n\n` +
+        `• Cliente: ${formData.fullName}\n` +
+        `• Empresa/Organización: ${formData.company || 'N/A'}\n` +
+        `• Cargo: ${formData.role || 'N/A'}\n` +
+        `• Correo: ${formData.email}\n` +
+        `• WhatsApp: ${formData.phone}\n` +
+        `• Modalidad: ${formData.meetingMode}\n` +
+        `• Especialidad: ${formData.area}\n\n` +
+        `Contexto inicial:\n` +
+        `${formData.notes || 'Revisión técnica de indicadores y planeación estratégica.'}`,
+
+      startTime: startIso,
+      endTime: endIso,
+
+      attendeeEmail: formData.email,
+      attendeeName: formData.fullName,
+
+      area: formData.area,
+      fullName: formData.fullName,
+      company: formData.company,
+      role: formData.role,
+      phone: formData.phone,
+      meetingMode: formData.meetingMode,
+      notes: formData.notes,
+    });
+
+    setCreatedEvent(event);
+    setShowConfirmModal(false);
+    setSubmitted(true);
+
+  } catch (err: any) {
+
+    console.error(
+      'Error al agendar en Google Calendar:',
+      err
+    );
+
+    setCalendarError(
+      err.message ||
+      'Ocurrió un error al agendar la sesión.'
+    );
+
+    setShowConfirmModal(false);
+    setSubmitted(true);
+
+  } finally {
+
+    setIsSchedulingCalendar(false);
+
+  }
+};
 
       setCreatedEvent(event);
       setShowConfirmModal(false);
@@ -154,15 +164,15 @@ export const ContactoScreen: React.FC<ContactoScreenProps> = ({
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (formData.meetingMode.includes('Virtual') && googleUser) {
-      setShowConfirmModal(true);
-      return;
-    }
+  if (formData.meetingMode.includes('Virtual')) {
+    setShowConfirmModal(true);
+    return;
+  }
 
-    setSubmitted(true);
-  };
+  setSubmitted(true);
+};
 
   const getFallbackCalendarLink = () => {
     const [startHourStr, startMinStr] = formData.preferredTime.split(' - ')[0].split(':');
