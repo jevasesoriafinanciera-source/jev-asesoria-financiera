@@ -42,7 +42,7 @@ export const CalendarConfirmModal: React.FC<CalendarConfirmModalProps> = ({
           </div>
           <div>
             <h3 className="text-lg font-bold font-display">
-              Confirmar Agendamiento en Google Calendar
+           Confirmar Agendamiento
             </h3>
             <p className="text-xs text-[#94A3B8]">
               Se creará un nuevo evento en tu calendario principal con sala Google Meet
