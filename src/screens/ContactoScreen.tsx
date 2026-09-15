@@ -381,17 +381,17 @@ export const ContactoScreen: React.FC<ContactoScreenProps> = ({
 
                   {/* CALENDAR SCHEDULER: Displayed when Virtual (Google Meet) is selected */}
                   {formData.meetingMode.includes('Virtual') && (
-                    <CalendarScheduler
-                      selectedDate={formData.preferredDate}
-                      onDateChange={(date) => setFormData({ ...formData, preferredDate: date })}
-                      selectedTimeSlot={formData.preferredTime}
-                      onTimeSlotChange={(slot) => setFormData({ ...formData, preferredTime: slot })}
-                      googleUser={googleUser}
-                      isConnectingGoogle={isConnectingGoogle}
-                      onConnectGoogle={handleConnectGoogle}
-                      onDisconnectGoogle={handleDisconnectGoogle}
-                      availableTimeSlots={AVAILABLE_TIME_SLOTS}
-                    />
+               <CalendarScheduler
+  selectedDate={formData.preferredDate}
+  onDateChange={(date) =>
+    setFormData({ ...formData, preferredDate: date })
+  }
+  selectedTimeSlot={formData.preferredTime}
+  onTimeSlotChange={(slot) =>
+    setFormData({ ...formData, preferredTime: slot })
+  }
+  availableTimeSlots={AVAILABLE_TIME_SLOTS}
+/>
                   )}
 
                   {/* Contact Info */}
