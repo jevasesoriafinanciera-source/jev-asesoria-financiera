@@ -1,78 +1,20 @@
-import { initializeApp, getApps, getApp } from 'firebase/app';
-import {
-  getAuth,
-  signInWithPopup,
-  GoogleAuthProvider,
-  onAuthStateChanged,
-  User,
-  signOut,
-} from 'firebase/auth';
-import firebaseConfig from '../../firebase-applet-config.json';
-
-// Initialize Firebase App if not already initialized
-const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-
-// Provider with required Google Calendar scopes
-const provider = new GoogleAuthProvider();
-provider.addScope('https://www.googleapis.com/auth/calendar');
-provider.addScope('https://www.googleapis.com/auth/calendar.events');
-
-// In-memory access token cache
-let cachedAccessToken: string | null = null;
-let isSigningIn = false;
-
-export const initAuth = (
-  onAuthSuccess?: (user: User, token: string) => void,
-  onAuthFailure?: () => void
-) => {
-  return onAuthStateChanged(auth, async (user: User | null) => {
-    if (user && cachedAccessToken) {
-      if (onAuthSuccess) onAuthSuccess(user, cachedAccessToken);
-    } else {
-      if (!isSigningIn) {
-        cachedAccessToken = null;
-        if (onAuthFailure) onAuthFailure();
-      }
-    }
-  });
-};
-
-export const googleSignIn = async (): Promise<{ user: User; accessToken: string }> => {
-  try {
-    isSigningIn = true;
-    const result = await signInWithPopup(auth, provider);
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    if (!credential?.accessToken) {
-      throw new Error('No se pudo obtener el token de acceso para Google Calendar.');
-    }
-
-    cachedAccessToken = credential.accessToken;
-    return { user: result.user, accessToken: cachedAccessToken };
-  } catch (error) {
-    console.error('Error durante autenticación Google:', error);
-    throw error;
-  } finally {
-    isSigningIn = false;
-  }
-};
-
-export const getAccessToken = async (): Promise<string | null> => {
-  return cachedAccessToken;
-};
-
-export const logoutGoogle = async () => {
-  await signOut(auth);
-  cachedAccessToken = null;
-};
+const APPS_SCRIPT_URL =
+  'https://script.google.com/macros/s/AKfycbyjraw3WRIAdbC7HQq6r5_t1VU5hmX1Ap9owWGZWZjDLRVfKY2iO4YsFbtqGCZtupL2Ow/exec';
 
 export interface CalendarEventPayload {
   summary: string;
   description: string;
-  startTime: string; // ISO string
-  endTime: string; // ISO string
+  startTime: string;
+  endTime: string;
   attendeeEmail?: string;
   attendeeName?: string;
+  area?: string;
+  fullName?: string;
+  company?: string;
+  role?: string;
+  phone?: string;
+  meetingMode?: string;
+  notes?: string;
 }
 
 export interface CreatedCalendarEvent {
@@ -82,95 +24,62 @@ export interface CreatedCalendarEvent {
   summary: string;
 }
 
+/**
+ * Crea una cita en el Google Calendar de JEV
+ * mediante Google Apps Script.
+ *
+ * El cliente NO necesita iniciar sesión con Google.
+ */
 export const createCalendarEvent = async (
-  payload: CalendarEventPayload,
-  token?: string
+  payload: CalendarEventPayload
 ): Promise<CreatedCalendarEvent> => {
-  const accessToken = token || cachedAccessToken;
-  if (!accessToken) {
-    throw new Error('Se requiere autenticación con Google Calendar para crear el evento.');
-  }
 
-  const attendees = [];
-  if (payload.attendeeEmail) {
-    attendees.push({
-      email: payload.attendeeEmail,
-      displayName: payload.attendeeName || undefined,
-    });
-  }
-
-  // Include institutional advisor email
-  attendees.push({
-    email: 'clientes@jevasesoriafinanciera.com',
-    displayName: 'JEV Asesoría Financiera',
+  const response = await fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'text/plain;charset=utf-8',
+    },
+    body: JSON.stringify({
+      title: payload.summary,
+      fullName: payload.fullName || payload.attendeeName || '',
+      company: payload.company || '',
+      role: payload.role || '',
+      email: payload.attendeeEmail || '',
+      phone: payload.phone || '',
+      area: payload.area || '',
+      meetingMode: payload.meetingMode || 'Virtual (Google Meet)',
+      notes: payload.notes || '',
+      startTime: payload.startTime,
+      endTime: payload.endTime,
+    }),
   });
 
-  const eventBody = {
-    summary: payload.summary,
-    description: payload.description,
-    start: {
-      dateTime: payload.startTime,
-      timeZone: 'America/Bogota',
-    },
-    end: {
-      dateTime: payload.endTime,
-      timeZone: 'America/Bogota',
-    },
-    attendees,
-    conferenceData: {
-      createRequest: {
-        requestId: `jev-meet-${Date.now()}`,
-        conferenceSolutionKey: {
-          type: 'hangoutsMeet',
-        },
-      },
-    },
-    reminders: {
-      useDefault: false,
-      overrides: [
-        { method: 'email', minutes: 24 * 60 },
-        { method: 'popup', minutes: 30 },
-      ],
-    },
-  };
-
-  const response = await fetch(
-    'https://www.googleapis.com/calendar/v3/calendars/primary/events?conferenceDataVersion=1',
-    {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(eventBody),
-    }
-  );
-
   if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    console.error('Google Calendar API Error:', errorData);
     throw new Error(
-      errorData?.error?.message ||
-        `Error ${response.status} al programar en Google Calendar.`
+      `Error ${response.status} al comunicarse con el sistema de agendamiento.`
     );
   }
 
   const data = await response.json();
-  const meetUri =
-    data.conferenceData?.entryPoints?.find(
-      (ep: { entryPointType: string; uri: string }) => ep.entryPointType === 'video'
-    )?.uri || data.hangoutLink;
+
+  if (!data.success) {
+    throw new Error(
+      data.message || 'No fue posible crear la cita.'
+    );
+  }
 
   return {
-    id: data.id,
-    htmlLink: data.htmlLink,
-    meetLink: meetUri,
-    summary: data.summary,
+    id: data.eventId,
+    htmlLink: data.eventUrl,
+    meetLink: data.meetLink || undefined,
+    summary: data.eventTitle,
   };
 };
 
+
 /**
- * Fallback / instant calendar template link generator (opens in Google Calendar)
+ * Genera un enlace alternativo para agregar
+ * manualmente la cita a Google Calendar.
  */
 export const buildGoogleCalendarWebLink = (
   title: string,
@@ -178,8 +87,11 @@ export const buildGoogleCalendarWebLink = (
   startTime: string,
   endTime: string
 ): string => {
+
   const formatTime = (iso: string) =>
-    new Date(iso).toISOString().replace(/-|:|\.\d\d\d/g, '');
+    new Date(iso)
+      .toISOString()
+      .replace(/-|:|\.\d\d\d/g, '');
 
   const startFormatted = formatTime(startTime);
   const endFormatted = formatTime(endTime);
@@ -189,8 +101,8 @@ export const buildGoogleCalendarWebLink = (
     text: title,
     details: details,
     dates: `${startFormatted}/${endFormatted}`,
-    add: 'clientes@jevasesoriafinanciera.com',
-    location: 'Google Meet (Sesión Virtual)',
+    add: 'jevasesoriafinanciera@gmail.com',
+    location: 'Google Meet - JEV Asesoría Financiera',
   });
 
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
