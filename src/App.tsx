@@ -120,7 +120,7 @@ export function App() {
         )}
 
         <a
-          href="https://wa.me/573105550192?text=Hola%20JEV%20Asesor%C3%ADa%20Financiera%2C%20deseo%20hacer%20una%20consulta%20directa"
+          href="https://wa.me/573123688480?text=Hola%2C%20quiero%20recibir%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20JEV%20Asesor%C3%ADa%20Financiera."
           target="_blank"
           rel="noreferrer"
           className="group flex items-center gap-2.5 py-3 px-4 rounded-full bg-[#00a572] text-white font-medium shadow-2xl hover:bg-[#00a572]/90 transition-all hover:scale-105"
