@@ -75,8 +75,7 @@ export const ContactoScreen: React.FC<ContactoScreenProps> = ({
 
   // Auth state listener
   
-
-  const executeCalendarBooking = async () => {
+const executeCalendarBooking = async () => {
   setIsSchedulingCalendar(true);
   setCalendarError(null);
 
@@ -123,6 +122,30 @@ export const ContactoScreen: React.FC<ContactoScreenProps> = ({
       meetingMode: formData.meetingMode,
       notes: formData.notes,
     });
+
+    setCreatedEvent(event);
+    setShowConfirmModal(false);
+    setSubmitted(true);
+
+  } catch (err: any) {
+    console.error(
+      'Error al agendar en Google Calendar:',
+      err
+    );
+
+    setCalendarError(
+      err.message ||
+      'Ocurrió un error al agendar la sesión.'
+    );
+
+    setShowConfirmModal(false);
+    setSubmitted(true);
+
+  } finally {
+    setIsSchedulingCalendar(false);
+  }
+};
+  
 
     setCreatedEvent(event);
     setShowConfirmModal(false);
