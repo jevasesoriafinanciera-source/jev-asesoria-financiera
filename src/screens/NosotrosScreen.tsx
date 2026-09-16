@@ -211,14 +211,17 @@ export const NosotrosScreen: React.FC<NosotrosScreenProps> = ({
               className="rounded-2xl bg-[#131b2e] border border-[#334155] p-6 flex flex-col justify-between hover:border-[#7EDBFF]/50 transition-all"
             >
               <div className="space-y-4">
-                <div className="w-20 h-20 rounded-2xl overflow-hidden bg-[#0b1326] border border-[#334155] mx-auto mb-4">
-                  <img
-                    src={member.imageUrl}
-                    alt={member.name}
-                    className="w-full h-full object-cover"
-                    referrerPolicy="no-referrer"
-                  />
-                </div>
+               <div className="w-20 h-20 rounded-2xl overflow-hidden bg-gradient-to-br from-[#131b2e] to-[#0b1326] border border-[#7EDBFF]/30 mx-auto mb-4 flex items-center justify-center shadow-lg shadow-black/20">
+  <span className="text-xl font-bold font-display text-[#7EDBFF]">
+    {member.name
+      .split(' ')
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((name) => name[0])
+      .join('')
+      .toUpperCase()}
+  </span>
+</div>
 
                 <div className="text-center space-y-1">
                   <span
