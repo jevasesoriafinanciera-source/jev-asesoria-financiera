@@ -18,43 +18,29 @@ export interface TeamMember {
 
 export const TEAM_MEMBERS: TeamMember[] = [
   {
-    name: 'Carlos Eduardo Vargas, MSc.',
-    role: 'Socio Director • Estrategia Corporativa & M&A',
-    tag: 'SOCIO FUNDADOR',
+    name: 'Juan Sebastián Cárdenas',
+    role: 'CEO & Founder • Estrategia Financiera',
+    tag: 'CEO & FOUNDER',
     tagColor: '#7EDBFF',
-    bio: 'Especialista en valoración de empresas y fusiones transfronterizas. Ex-miembro del equipo de reestructuración corporativa en banca de inversión regional con más de 14 años liderando transacciones.',
+    bio: 'Especialista con más de ocho años de experiencia en auditoría y control financiero, valoración de compañías y estructuración de estrategias financieras para compañías líderes de sector.',
     education: [
-      'Universidad de los Andes • Finanzas Corporativas',
-      'Wharton Executive Education • Mergers & Acquisitions',
+      'Master en Alta Dirección Empresarial',
+      'Doble Especialización en Gerencia Financiera y Finanzas Internacionales',
+      'Administrador de Empresas',
     ],
-    imageUrl:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuCYNEB2w3d2OEeCpbh-bgvH_EZ1rI-ZByCvG8WSjNpGXfYJ7ilxDG97Ziz3HHTYABF-pWAVY3hHX8VmaQAFNZXuLn5B1sg35kFfaolgfjcR9E5qjFzBiawfRyjHikbj3v9TETwaWhsK01Qd-3MNDi8n3pUxO_LWFn9bDdv6jDZeA4FD6Ei4THF1qtiTM8-jkWB6ljOwrPAiZjEBlxbh10oKMJSFJ3H_l58TBI0fl4BSEYWbyjci57Oi',
+    imageUrl: '',
   },
   {
-    name: 'Dra. Marcela Restrepo S.',
-    role: 'Directora • Planeación Tributaria & Litigios DIAN',
-    tag: 'SOCIA LITIGIOS',
+    name: 'Edwin Rodríguez',
+    role: 'Counter & Founder • Director Tributario',
+    tag: 'DIRECTOR TRIBUTARIO',
     tagColor: '#4edea3',
-    bio: 'Líder en estructuración fiscal patrimonial y defensa contenciosa ante la DIAN y el Consejo de Estado con más de 12 años de trayectoria intachable y 98.2% de efectividad.',
+    bio: 'Especialista en impuestos con más de 10 años de experiencia en gestión fiscal y riesgos tributarios para compañías líderes de sector.',
     education: [
-      'Pontificia Universidad Javeriana • Derecho Tributario',
-      'Instituto Colombiano de Derecho Tributario (ICDT)',
+      'Contador Público',
+      'Especialista Tributario',
     ],
-    imageUrl:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuC7O3lYeQF3kDAAg5JVRhoHSY5pKouJGB_1d6d7Dz6LSjC4R9HjbNP35EzzPk1he2KVS7JEPGwOuzpWKaBV4HX56J6WihvjP6YWQjxNvy1PfKmiVT7QI51MBBTJ4EETboPFXrYzz6aAcdv_a-30EHzdy_T820gLN2Vomjdx9rF8_Mb8YelyL7Qw9tzrMnfIYwP-PPTIefW_pM8geSPphl-rQ0HsS0RSC4-xznCCtsDnVaeq0DIyYn9A',
-  },
-  {
-    name: 'Felipe Morales Holguín, CFA',
-    role: 'Director • Wealth Management & Finanzas Cuantitativas',
-    tag: 'DIRECTOR WEALTH',
-    tagColor: '#b4c5ff',
-    bio: 'Especializado en asignación estratégica de activos (SAA), preservación de capital para family offices e inversión estructurada offshore en EE.UU., Panamá y Europa.',
-    education: [
-      'IE Business School (Madrid) • Master in Advanced Finance',
-      'CFA Institute Charterholder #481903',
-    ],
-    imageUrl:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuBu3zPURzJQqjOmQhQ0KLZs0UI54OS_-IvWCh9SDKBXtkzjJyfSp3qLu2BgZk8Qdok1ZWNT_8VNZsL8o73Z4RTtcq1tdmS9NVxK3IQjJyBi2RjNpQV-_LftrMzuTMloxQenkzs0JgzBZ3ZEojr466ukNdnzANL1nWMeYWEf-84UF_km7mPyuXUnP0JMyZoe2u9kjKskk4L-xzg44khtwXUAY15IJ60lp2RsVL-ML1wfIe367jgDPESm',
+    imageUrl: '',
   },
 ];
 
