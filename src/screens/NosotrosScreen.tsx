@@ -125,70 +125,7 @@ export const NosotrosScreen: React.FC<NosotrosScreenProps> = ({
         </div>
       </section>
 
-      {/* 2.5 EMBLEMA OFICIAL & SIMBOLOGÍA */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl bg-gradient-to-b from-[#171f33] to-[#0d1527] border border-[#334155] p-8 md:p-12 shadow-2xl">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            <div className="lg:col-span-7 space-y-5">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#131b2e] border border-[#7EDBFF]/30 text-[#7EDBFF] text-xs font-mono">
-                <Sparkles className="w-3.5 h-3.5" />
-                SIMBOLOGÍA & ARQUITECTURA DE MARCA
-              </div>
-              <h2 className="text-2xl sm:text-4xl font-bold font-display text-white tracking-tight">
-                El Emblema JEV: La Celosía de la Certeza Financiera
-              </h2>
-              <p className="text-sm sm:text-base text-[#c3c6d7] leading-relaxed">
-                Nuestra marca condensa el rigor matemático y la ingeniería de patrimonios: una estructura ascendente de <strong className="text-white">36 rombos geométricos</strong> que representan las capas de flujo de caja, el blindaje fiscal y la convergencia de capital hacia la solidez empresarial.
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                <div className="p-4 rounded-xl bg-[#0e172a] border border-[#334155]/80 space-y-1.5">
-                  <span className="text-xs font-mono text-[#7EDBFF] font-bold">Vértice de Ascensión</span>
-                  <p className="text-xs text-[#94A3B8]">
-                    Cada nivel del rombo modela el avance estratégico desde el saneamiento contable hasta la expansión de márgenes EBITDA.
-                  </p>
-                </div>
-                <div className="p-4 rounded-xl bg-[#0e172a] border border-[#334155]/80 space-y-1.5">
-                  <span className="text-xs font-mono text-[#4edea3] font-bold">Tipografía Geométrica</span>
-                  <p className="text-xs text-[#94A3B8]">
-                    Líneas puras y proporciones arquitectónicas que reflejan transparencia absoluta y ausencia de opacidad contable.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Visual Logo Showcase: Logo Original */}
-            <div className="lg:col-span-5 flex flex-col items-center justify-center">
-              <div className="w-full max-w-sm p-6 rounded-3xl bg-white shadow-2xl border border-slate-200 text-center flex flex-col items-center">
-                <img
-                  src="/13046_JEV-Asesorias-finacieras_Logo.png"
-                  alt="Logo Oficial JEV Asesoría Financiera"
-                  referrerPolicy="no-referrer"
-                  className="w-full max-w-[260px] h-auto object-contain"
-                />
-                <span className="text-[11px] font-mono tracking-wider text-slate-600 font-semibold mt-4 pt-3 border-t border-slate-100 w-full text-center block">
-                  Emblema Institucional Original
-                </span>
-                <div className="flex items-center gap-2 mt-3 pt-1">
-                  <a
-                    href="/13046_JEV-Asesorias-finacieras_Logo.png"
-                    download="JEV-Asesorias-Financieras-Logo.png"
-                    className="text-[10px] font-mono px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
-                  >
-                    Descargar PNG
-                  </a>
-                  <a
-                    href="/logo-oficial-jev.svg"
-                    download="JEV-Asesorias-Financieras-Logo.svg"
-                    className="text-[10px] font-mono px-2.5 py-1 rounded bg-[#14468d] hover:bg-[#103770] text-white transition-colors"
-                  >
-                    Descargar SVG
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+  
 
       {/* 3. CONSEJO CONSULTIVO & SOCIOS DIRECTORES */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
