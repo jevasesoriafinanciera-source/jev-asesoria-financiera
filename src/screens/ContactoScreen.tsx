@@ -177,7 +177,7 @@ export const ContactoScreen: React.FC<ContactoScreenProps> = ({
       `Hola JEV Asesoría Financiera, solicito agendar una Sesión Estratégica:\n- Nombre: ${formData.fullName}\n- Empresa/Perfil: ${formData.company || 'Particular'}\n- Área: ${formData.area}\n- Modalidad: ${formData.meetingMode}\n- Fecha: ${formData.preferredDate}\n- Horario deseado: ${formData.preferredTime}\n- Teléfono/Email: ${formData.phone} / ${formData.email}`
     );
 
-    return `https://wa.me/573123688480?text=${text}`;
+    return `https://wa.me/573001275460?text=${text}`;
   };
 
   const faqs = [
