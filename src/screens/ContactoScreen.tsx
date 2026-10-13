@@ -245,7 +245,7 @@ export const ContactoScreen: React.FC<ContactoScreenProps> = ({
               </h3>
 
               <a
-                href="https://wa.me/573123688480?text=Hola%20JEV%20Asesor%C3%ADa%20Financiera%2C%20deseo%20hacer%20una%20consulta%20directa"
+                href="https://wa.me/573001275460?text=Hola%20JEV%20Asesor%C3%ADa%20Financiera%2C%20deseo%20hacer%20una%20consulta%20directa"
                 target="_blank"
                 rel="noreferrer"
                 className="w-full py-3.5 px-5 rounded-xl bg-[#00a572] hover:bg-[#00a572]/90 text-white font-bold text-sm flex items-center justify-center gap-2.5 transition-all shadow-lg hover:shadow-[#00a572]/20 text-center"
