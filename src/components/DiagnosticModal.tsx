@@ -32,7 +32,7 @@ export const DiagnosticModal: React.FC<DiagnosticModalProps> = ({
     const text = encodeURIComponent(
       `Hola JEV Asesoría Financiera, solicito mi Pre-Diagnóstico Financiero Inmediato:\n- Perfil: ${formData.profile}\n- Nombre: ${formData.name}\n- Teléfono/Email: ${formData.contact}\n- Objetivo: ${formData.goal}`
     );
-    return `https://wa.me/573105550192?text=${text}`;
+    return `https://wa.me/573001275460?text=${text}`;
   };
 
   return (
