@@ -183,10 +183,10 @@ export const DiagnosticModal: React.FC<DiagnosticModalProps> = ({
                 <span className="text-[#94A3B8]">Especialista recomendado:</span>
                 <span className="text-white font-medium">
                   {formData.profile === 'Empresa'
-                    ? 'Carlos Eduardo Vargas (M&A / Corp)'
+                    ? 'Juan Sebastian Cardenas (M&A / Corp)'
                     : formData.profile === 'Persona Natural'
-                    ? 'Dra. Marcela Restrepo (Fiscal / Renta)'
-                    : 'Felipe Morales (Startups / CFO)'}
+                    ? 'Edwin Rodriguez (Fiscal / Renta)'
+                    : 'Juan Sebastian Cardenas (Startups / CFO)'}
                 </span>
               </div>
               <div className="flex justify-between">
