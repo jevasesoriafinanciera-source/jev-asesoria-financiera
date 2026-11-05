@@ -408,7 +408,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3 pt-2">
                     <a
-                      href={`https://wa.me/573105550192?text=${encodeURIComponent(
+                      href={`https://wa.me/573001275460?text=${encodeURIComponent(
                         `Hola JEV, completé el Pre-Diagnóstico en su web para ${selectedProfile} (Nombre: ${name}, Contacto: ${contact}). Deseo coordinar la revisión.`
                       )}`}
                       target="_blank"
