@@ -502,7 +502,7 @@ export const PersonaNaturalScreen: React.FC<PersonaNaturalScreenProps> = ({
                     Solicitud Patrimonial Recibida
                   </h3>
                   <p className="text-sm text-[#c3c6d7]">
-                    La Dra. Marcela Restrepo o un socio sénior de planeación fiscal revisará los parámetros ingresados y se comunicará de manera privada a su número personal.
+                    El Sr Edwin Rodriguez o un socio sénior de planeación fiscal revisará los parámetros ingresados y se comunicará de manera privada a su número personal.
                   </p>
                   <button
                     onClick={() => setFormSent(false)}
