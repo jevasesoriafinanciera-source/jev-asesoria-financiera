@@ -640,7 +640,7 @@ export const StartupsScreen: React.FC<StartupsScreenProps> = ({
                     Datos de la Startup Recibidos
                   </h3>
                   <p className="text-sm text-[#c3c6d7]">
-                    Nos contactaremos directamente con <strong className="text-white">{startupForm.name}</strong> para coordinar una sesión técnica de 30 minutos con Felipe Morales (Head de Startups).
+                    Nos contactaremos directamente con <strong className="text-white">{startupForm.name}</strong> para coordinar una sesión técnica de 30 minutos con Juan Cardenas (Head de Startups).
                   </p>
                   <button
                     onClick={() => setSubmitted(false)}
